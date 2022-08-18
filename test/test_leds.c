@@ -5,7 +5,6 @@ uint16_t leds_virtuales;
 
 void setUp(void)
 {
-
     LedsCreate(&leds_virtuales);
 }
 
@@ -39,4 +38,32 @@ void test_prender_y_apagar_varios_leds(void)
     LedsSingleTurnOn(7);
     LedsSingleTurnOff(7);
     TEST_ASSERT_EQUAL(1 << 2, leds_virtuales);
+}
+
+// Prender todos los LEDs de una vez
+void test_prender_todos_los_led(void)
+{
+    LedsAllOn();
+    TEST_ASSERT_EQUAL(0xFFFF, leds_virtuales);
+}
+
+// Apagar todos los LEDs de una vez
+void test_apagar_todos_los_led(void)
+{
+    LedsAllOn();
+    LedsAllOff();
+    TEST_ASSERT_EQUAL(0x0000, leds_virtuales);
+}
+
+// Consultar el estado de un LED que esta encendido
+void test_consultar_estado_led_encendido(void)
+{
+    LedsSingleTurnOn(5);
+    TEST_ASSERT_EQUAL(1, LedsGetState(5));
+}
+
+// Consultar el estado de un LED que esta apagado
+void test_consultar_estado_led_apagado(void)
+{
+    TEST_ASSERT_EQUAL(0, LedsGetState(6));
 }
